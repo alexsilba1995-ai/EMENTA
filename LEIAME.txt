@@ -1,0 +1,19 @@
+EMENTA DIGITAL - PASSOS (uma só vez)
+
+1. Instalar o Python (python.org) e o "ODBC Driver 17 for SQL Server" (Microsoft). Depois, duplo clique em instalar.bat
+2. Abrir config.json e preencher: nome_restaurante, servidor, utilizador, palavra_passe e url_publico.
+   (Criar no SQL Server um utilizador SÓ DE LEITURA para isto.)
+3. Se der erro nos nomes das tabelas: python atualizar_ementa.py --tabelas  e ajustar "consulta_ementa".
+4. Criar conta em github.com, criar um repositório público (ex.: ementa), e nesta pasta executar:
+     git init
+     git add .
+     git commit -m "inicio"
+     git branch -M main
+     git remote add origin https://github.com/O-TEU-UTILIZADOR/ementa.git
+     git push -u origin main
+   No GitHub: Settings > Pages > Source: main, pasta /publico (se não aparecer a pasta, usar "GitHub Actions"
+   ou mover o conteúdo de publico para a raiz e alterar "pasta_publica" em config.json para ".").
+5. O endereço será https://O-TEU-UTILIZADOR.github.io/ementa/  -> colocar em url_publico.
+6. Gerar o QR code: python atualizar_ementa.py --qr   (cria qr_ementa.png, imprimir e colar nas mesas)
+
+USO DIÁRIO: duplo clique em iniciar_painel.bat -> botão "Atualizar ementa".

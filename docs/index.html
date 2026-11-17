@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ementa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f5;--ink:#1c2a2d;--mute:#5d6b6e;--line:#d7dcda;--acc:#0f5c5c;--surf:#fff}
+@media(prefers-color-scheme:dark){:root{--bg:#121a1c;--ink:#e8eeee;--mute:#9aa8aa;--line:#2b3a3d;--acc:#6fc2bd;--surf:#192326}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,sans-serif}
+header{padding:2rem 1.2rem 1rem;max-width:40rem;margin:auto}
+h1,h2{font-family:"Source Serif 4",Georgia,serif;margin:0}
+h1{font-size:2rem}
+.upd{color:var(--mute);font-size:.85rem;margin-top:.3rem}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:2}
+nav div{display:flex;gap:.5rem;overflow-x:auto;padding:.7rem 1.2rem;max-width:40rem;margin:auto}
+nav a{white-space:nowrap;padding:.35rem .9rem;border:1px solid var(--line);border-radius:99px;color:var(--ink);text-decoration:none;font-size:.95rem}
+nav a:focus-visible{outline:2px solid var(--acc)}
+main{max-width:40rem;margin:auto;padding:0 1.2rem 4rem}
+section{margin-top:2rem}
+h2{font-size:1.5rem;color:var(--acc);border-bottom:2px solid var(--acc);padding-bottom:.3rem}
+h3{font-size:1rem;margin:1.2rem 0 .2rem;color:var(--mute);font-weight:600}
+.item{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px dotted var(--line)}
+.preco{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.erro{padding:2rem 1.2rem;text-align:center;color:var(--mute)}
+</style>
+</head>
+<body>
+<header><h1 id="titulo">Ementa</h1><div class="upd" id="upd"></div></header>
+<nav aria-label="Categorias"><div id="nav"></div></nav>
+<main id="ementa"><p class="erro">A carregar…</p></main>
+<script>
+const eur = new Intl.NumberFormat("pt-PT",{style:"currency",currency:"EUR"});
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+fetch("menu.json?t="+Date.now()).then(r=>r.json()).then(m=>{
+  document.title = m.nome; titulo.textContent = m.nome;
+  upd.textContent = "Atualizado em " + m.atualizado;
+  nav.innerHTML = m.categorias.map((c,i)=>`<a href="#c${i}">${esc(c.nome)}</a>`).join("");
+  ementa.innerHTML = m.categorias.map((c,i)=>`<section id="c${i}"><h2>${esc(c.nome)}</h2>`+
+    c.subcategorias.map(s=>(s.nome?`<h3>${esc(s.nome)}</h3>`:"")+
+      s.produtos.map(p=>`<div class="item"><span>${esc(p.nome)}</span><span class="preco">${eur.format(p.preco)}</span></div>`).join("")
+    ).join("")+`</section>`).join("");
+}).catch(()=>{ementa.innerHTML='<p class="erro">Não foi possível carregar a ementa. Tente novamente.</p>'});
+</script>
+</body>
+</html>

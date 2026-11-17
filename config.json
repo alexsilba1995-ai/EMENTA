@@ -1,0 +1,15 @@
+28{
+  "nome_restaurante": "O Meu Restaurante",
+  "url_publico": "https://alexsilba1995-ai.github.io/ementa/",
+  "sql_server": {
+    "driver": "ODBC Driver 17 for SQL Server",
+    "servidor": "localhost\\ZONESOFTSQL",
+    "base_dados": "zsrest_2024_0",
+    "utilizador": "sa",
+    "palavra_passe": "InforQ#2018*"
+  },
+  "consulta_ementa": "SELECT f.descricao AS categoria, sf.descricao AS subcategoria, p.descricao AS produto, p.precovenda AS preco FROM produtos p JOIN familias f ON f.codigo = p.familia LEFT JOIN subfamilias sf ON sf.codigo = p.subfam AND sf.familia = p.familia WHERE p.loja = 1 AND p.retalho = 1 AND f.frontoffice = 1 AND p.precovenda > 0 ORDER BY f.posicaofront, f.descricao, sf.posicao, p.ordem, p.descricao",
+  "pasta_publica": "docs",
+  "publicar_com_git": true,
+  "porta_painel": 8765
+}

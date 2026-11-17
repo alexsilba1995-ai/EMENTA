@@ -1,0 +1,2 @@
+pyodbc
+qrcode[pil]
